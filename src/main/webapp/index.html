@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="./lib/bootstrap/bootstrap.min.css">
+
+    <script src="./lib/bootstrap/bootstrap.bundle.js"></script>
+    <script src="./script.js"></script>
+
+    <title>Inicio</title>
+  </head>
+  <body>
+    <nav class="row bg-white align-items-center px-4 py-4 m-0 gap-4 justify-content-start">
+      <button class="p-1 col-auto bg-white rounded-1 border border-1 row align-items-center justify-content-center flex-nowrap m-0">
+        <img src="./icons/adicionar.svg" alt="" width="18" height="18" class="col-auto"/>
+        <span class="col-auto">Adicionar</span>
+      </button>
+
+      <div class="p-1 col-auto ms-auto bg-white rounded-1 border border-1 d-flex flex-row align-items-center justify-content-center flex-nowrap align-self-end">
+        <img src="./icons/pesquisar.svg" alt="" width="18" height="18" class="col-2"/>
+        <input type="text" placeholder="Nome do funcionario" class="col-10 m-0 h-50 border-0"/>
+      </div>
+    </nav>
+    <main class="w-full d-flex flex-column align-items-center px-4">
+      <table id="funcionarios-tabelas" class="w-full">
+        <thead id="funcionarios-tabelas__header"> 
+          <tr class="d-flex flex-row align-items-center gap-4 py-4">
+            <th class="px-2 text-center">Nome</th>
+            <th class="px-2 text-center">Funcionario</th>
+            <th class="px-2 text-center">Salário</th>
+            <th class="px-2 text-center">Data de contratação</th>
+            <th class="px-2 text-center">Data de registro no sistema</th>
+          </tr>
+        </thead>
+        <tbody id="funcionarios-tabelas__body"></tbody>
+      </table>
+    </main>
+  </body>
+</html>
