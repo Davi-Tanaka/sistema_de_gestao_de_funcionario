@@ -4,7 +4,7 @@
   <groupId>com.src.main</groupId>
   <artifactId>webapp</artifactId>
   <version>1.0</version>
-  <packaging>jar</packaging>
+  <packaging>jar</packaging>  
   <name>Sistema de gestao de funcionario</name>
     
   <parent>
@@ -103,6 +103,8 @@
   </dependencies>
     
   <build>
+    <finalName>sistema_de_gestao_de_funcionario</finalName>
+
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
