@@ -2,6 +2,9 @@
 
 html {
   font-family: 'Poppins';
+  min-height: 100vh;
 }
 
-
+body {
+  min-height: 100vh;
+}

@@ -1,41 +1,143 @@
 <!DOCTYPE html>
-<html lang="en">
+<html 
+  lang="pt-br"
+    xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:th="http://www.thymeleaf.org" 
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  >
   <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+     
+    <link href="/public/global.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    
+    <script src="/public/paginas/script.js" defer></script>
 
-    <link rel="stylesheet" href="./lib/bootstrap/bootstrap.min.css">
-
-    <script src="./lib/bootstrap/bootstrap.bundle.js"></script>
-    <script src="./script.js"></script>
-
-    <title>Inicio</title>
+    <title th:title th:text="${nomeDeUsuario}"/>
   </head>
   <body>
-    <nav class="row bg-white align-items-center px-4 py-4 m-0 gap-4 justify-content-start">
-      <button class="p-1 col-auto bg-white rounded-1 border border-1 row align-items-center justify-content-center flex-nowrap m-0">
-        <img src="./icons/adicionar.svg" alt="" width="18" height="18" class="col-auto"/>
+    <nav class="position-sticky top-0 z-2 w-full overflow-scroll row bg-white align-items-center px-4 py-4 m-0 gap-4 justify-content-start flex-nowrap">
+      <div class="p-1 col-auto bg-white rounded-1 border border-1 d-flex flex-row align-items-center justify-content-center flex-nowrap align-self-end">
+        <img src="/public/icons/pesquisar.svg" alt="" width="18" height="18" class="col-2"/>
+        <input id="pesquisar-funcionario-input" type="search" placeholder="Nome do funcionario" class="col-10 m-0 h-50 border-0"/>
+      </div>
+
+      <button id="adicionar-funcionario-btn" class="p-1 col-auto bg-white rounded-1 border border-1 row align-items-center justify-content-center flex-nowrap m-0">
+        <img src="/public/icons/adicionar.svg" alt="" width="18" height="18" class="col-auto"/>
         <span class="col-auto">Adicionar</span>
       </button>
 
-      <div class="p-1 col-auto ms-auto bg-white rounded-1 border border-1 d-flex flex-row align-items-center justify-content-center flex-nowrap align-self-end">
-        <img src="./icons/pesquisar.svg" alt="" width="18" height="18" class="col-2"/>
-        <input type="text" placeholder="Nome do funcionario" class="col-10 m-0 h-50 border-0"/>
-      </div>
+      <form action="/usuario/sair" method="post" class="ms-auto col-auto">
+        <button class="p-1 col-auto bg-white rounded-1 border border-1 row align-items-center justify-content-center flex-nowrap">
+          <img src="/public/icons/logout.svg" alt="" width="18" height="18" class="col-auto"/>
+          <span class="col-auto">Sair</span>
+        </button>
+      </form>
     </nav>
-    <main class="w-full d-flex flex-column align-items-center px-4">
-      <table id="funcionarios-tabelas" class="w-full">
-        <thead id="funcionarios-tabelas__header"> 
-          <tr class="d-flex flex-row align-items-center gap-4 py-4">
-            <th class="px-2 text-center">Nome</th>
-            <th class="px-2 text-center">Funcionario</th>
-            <th class="px-2 text-center">Salário</th>
-            <th class="px-2 text-center">Data de contratação</th>
-            <th class="px-2 text-center">Data de registro no sistema</th>
-          </tr>
-        </thead>
-        <tbody id="funcionarios-tabelas__body"></tbody>
-      </table>
+    <main class="w-full d-flex flex-column align-items-center px-4 position-relative z-1">
+      <div class="overflow-scroll col-12 d-flex d-flex flex-row">
+        <table id="funcionarios-tabelas" class="table table-hover col-auto ms-auto me-auto">
+          <thead id="funcionarios-tabelas__header"> 
+            <tr>
+              <th scope="col" class="px-2 text-center text-nowrap">Nome</th>
+              <th scope="col" class="px-2 text-center text-nowrap">Salário</th>
+              <th scope="col" class="px-2 text-center text-nowrap">Data de admissão</th>
+              <th scope="col" class="px-2 text-center text-nowrap">Data de registro no sistema</th>
+              <th scope="col" class="px-2 text-center text-nowrap">Remover</th>
+            </tr>
+          </thead>
+          <tbody id="funcionarios-tabela__body" class="w-12">
+            <tr th:each="func: ${funcionarios}" th:data-id="${func.id}">
+              <td class="text-center" scope="row" th:text="${func.nome}"/>
+              <td class="text-center" scope="row" th:text="${func.salario}" />
+              <td class="text-center" scope="row" th:text="${#temporals.format(func.dataAdmissao, 'dd/MM/yyyy')}" />
+              <td class="text-center" scope="row" th:text="${#temporals.format(func.dataDeCriacao, 'dd/MM/yyyy HH:mm:ss')}"/>
+
+              <td scope="row">
+                <button class="mx-auto remover-funcionario-button p-1 border-0 rounded-circle bg-transparent d-flex align-items-center justify-content-center">
+                  <img src="/public/icons/remover.svg" alt="" width="18" height="18">
+                </button>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <th scope="row"></th>
+            <td scope="row" class="text-center" th:text="${salariosSomatorio}" id="salario-somatorio"/>
+            <th scope="row"></th>
+            <th scope="row"></th>
+            <th scope="row"></th>
+            <th scope="row"></th>
+          </tfoot>
+        </table>
+      </div>
     </main>
+
+    <form 
+      id="adicionar-funcionario"
+      autocomplete="off"
+      method="post"
+      class="
+        z-3
+        d-none
+        d-flex gap-4 flex-column p-4 border border-1 rounded-1 position-fixed
+        col-11 col-sm-6 col-lg-4 col-xl-3 bg-white start-50 top-50 translate-middle 
+      "
+    >
+      <div class="col-12 d-flex align-items-center justify-content-end">
+        <button
+          id="fechar-tela-adicionar-funcionario-btn"
+          type="button"
+          class="btn bg-transparent rounded-circle p-1 border-0"
+        >
+          <img src="/public/icons/fechar.svg" alt=""/>
+        </button>
+      </div>
+
+      <div class="col-12 d-flex align-items-center justify-content-start">
+        <h1 class="fs-4 fw-bold">Adicionar funcionario</h1>
+      </div>
+
+      <div class="d-flex flex-column w-100 gap-2 col-auto">
+        <label class="fw-bold">Nome *</label>
+        <input
+          type="text" 
+          name="nome" 
+          value="" 
+          placeholder="Nome do funcionario"
+          class="col-12 rounded-sm px-2"
+        >
+      </div>
+
+      <div class="d-flex flex-column w-100 gap-2">
+        <label class="fw-bold">Salario *</label>
+        <input
+          type="number" 
+          step="0.01"
+          name="salario" 
+          value="" 
+          placeholder="1500"
+          class="col-12 rounded-sm px-2"
+        >
+      </div>
+
+      <div class="d-flex flex-column w-100 gap-2">
+        <label class="fw-bold">Data de admissão *</label>
+        <input
+          type="date" 
+          name="dataAdmissao" 
+          value="" 
+          placeholder="dd-mm-yyyy" 
+          class="col-12 rounded-sm px-2"
+        >
+      </div>
+
+      <div class="d-flex flex-row align-items-center gap-2 col-auto ms-auto mt-4">
+        <button type="reset" class="btn bg-light text-dark">Limpar</button>
+        <button class="btn bg-dark text-light fw-bold">Adicionar</button>
+      </div>
+    </form>
   </body>
 </html>
