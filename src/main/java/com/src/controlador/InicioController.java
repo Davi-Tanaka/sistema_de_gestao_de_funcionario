@@ -50,7 +50,7 @@ public class InicioController {
       model.addAttribute("funcionarios", funcionarioLista);
       model.addAttribute("nomeDeUsuario", usuario.getUsername());
 
-      return new ModelAndView("/index/index");
+      return new ModelAndView("index/index");
     } else {
       return new ModelAndView("redirect:/auth/login");
     }

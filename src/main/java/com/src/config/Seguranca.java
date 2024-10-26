@@ -29,21 +29,21 @@ public class Seguranca {
     JwtFilter jwtFilter = new JwtFilter(jwtService, userDetailsServiceImp);
 
     return hs
-      .csrf(e -> e.disable())
-      .authorizeHttpRequests(
-        e -> e
-          .requestMatchers(
-              "/public/**",  
-              "/auth/cadastrar", 
-              "/auth/login",
-              "/"
-          )
-              .permitAll()
-          .anyRequest()
-          .authenticated()
-      )
-      .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-      .build();
+        .csrf(e -> e.disable())
+        .authorizeHttpRequests(
+            e -> e
+                .requestMatchers(
+                    "/public/**",
+                    "/auth/cadastrar",
+                    "/auth/login",
+                    "/"
+                )
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+        )
+        .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+        .build();
   }
 
   @Bean

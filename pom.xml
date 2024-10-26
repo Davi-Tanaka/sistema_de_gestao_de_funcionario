@@ -1,12 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.src.main</groupId>
+  <groupId>com.src</groupId>
   <artifactId>webapp</artifactId>
   <version>1.0</version>
-  <packaging>jar</packaging>  
+  <packaging>war</packaging>  
   <name>Sistema de gestao de funcionario</name>
-    
+
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
@@ -16,6 +16,7 @@
   
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.main.class>com.src.Main</project.main.class>
   </properties>
     
   <dependencies>
@@ -37,7 +38,6 @@
       <artifactId>java-jwt</artifactId>
       <version>4.4.0</version>
     </dependency>
-
     
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -100,6 +100,12 @@
       <artifactId>mysql-connector-j</artifactId>
       <version>8.3.0</version>
     </dependency>
+    
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-tomcat</artifactId>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
     
   <build>
@@ -115,11 +121,29 @@
           <target>17</target>
         </configuration>
       </plugin>
+      
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <mainClass>${project.main.class}</mainClass>
+        </configuration>                   
+      </plugin>
+      
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
-        <version>3.3.2</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <classpathPrefix>lib/</classpathPrefix>
+              <addClasspath>true</addClasspath>
+              <mainClass>${project.main.class}</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
       </plugin>
+
     </plugins>
   </build>
 </project>

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.src.details.UserDetailsImp;
 import com.src.dto.usuario.CadastrarUsuario;
 import com.src.dto.usuario.UsuarioCadastradoComSucesso;
-import com.src.services.JwtService;
 import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

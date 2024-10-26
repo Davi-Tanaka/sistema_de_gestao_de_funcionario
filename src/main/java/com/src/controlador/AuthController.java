@@ -38,7 +38,7 @@ public class AuthController {
     if(usuario != null) {
       return new ModelAndView("redirect:/");
     } else {
-      return new ModelAndView("/auth/cadastrar/index");
+      return new ModelAndView("auth/cadastrar/index");
     }
   }
 
@@ -47,7 +47,7 @@ public class AuthController {
     if(usuario != null) {
       return new ModelAndView("redirect:/");
     } else {
-      return new ModelAndView("/auth/login/index");
+      return new ModelAndView("auth/login/index");
     }
   }
   
